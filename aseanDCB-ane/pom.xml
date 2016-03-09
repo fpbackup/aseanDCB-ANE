@@ -91,6 +91,7 @@
                             <name>Android-ARM</name>
                             <directory>src/main/resources/android</directory>
                             <extractLibrarySwf>true</extractLibrarySwf>
+                            <options>src/main/resources/android/aseanDCB_platformOptions.xml</options>
                         </platform>
                     </platforms>
                 </configuration>

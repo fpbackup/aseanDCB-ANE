@@ -38,12 +38,11 @@ import com.funkypanda.aseandcb.events.AseanDCBDebugEvent;
             }
         }
 
-
-        public function testFunction(testVal : String) : void
+        public function aseanDCBPay(testVal : String) : void
         {
             if (isAndroid)
             {
-                _extContext.call("testFunction", testVal);
+                _extContext.call("aseanDCBPay", testVal);
             }
         }
 

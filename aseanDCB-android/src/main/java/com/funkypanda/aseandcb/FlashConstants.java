@@ -7,6 +7,6 @@ public class FlashConstants {
     final public static String ERROR = "error";
 
     ////////////////////////////////////////////////////////////////////// function names
-    final public static String initializeSession = "initSession";
+    final public static String aseanDCBPay = "aseanDCBPay";
 
 }

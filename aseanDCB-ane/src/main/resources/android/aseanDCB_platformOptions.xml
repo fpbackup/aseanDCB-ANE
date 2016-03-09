@@ -1,0 +1,17 @@
+<platform xmlns="http://ns.adobe.com/air/extension/18.0">
+
+    <packagedDependencies>
+        <packagedDependency>aseandcbv1.411.jar</packagedDependency>
+        <packagedDependency>duniagamespurchaselib.jar</packagedDependency>
+        <packagedDependency>ForestIndoNiaga.jar</packagedDependency>
+        <packagedDependency>Mimopay-3.2.jar</packagedDependency>
+    </packagedDependencies>
+
+    <packagedResources>
+        <packagedResource>
+            <packageName>com.forest_interactive.aseandcb</packageName>
+            <folderName>aseandcb-res</folderName>
+        </packagedResource>
+    </packagedResources>
+
+</platform>

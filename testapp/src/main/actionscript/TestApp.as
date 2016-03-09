@@ -66,7 +66,7 @@ public class TestApp extends Sprite
 
         button = new Button();
         button.addEventListener(Event.TRIGGERED, function (evt : Event) : void {
-           aseanDCB.testFunction("test");
+           aseanDCB.aseanDCBPay("test");
         });
         button.label = "test1";
         button.validate();
@@ -94,7 +94,6 @@ public class TestApp extends Sprite
             log("Cannot create AseanDCB " + err + "\n" + err.getStackTrace());
             return;
         }
-
 
         aseanDCB.addEventListener(AseanDCBDebugEvent.DEBUG, function (evt : AseanDCBDebugEvent) : void {
             log("DEBUG " + evt.message);
