@@ -1,0 +1,93 @@
+/*
+ Testing application for the ANE.
+ Usage:
+  (OSX only) make gradlew executable
+  add mavenUsername, mavenPassword, repoManagerURL properties to your gradle.properties file
+  run gradlew packageMobile to create a test .ipa for iOS
+  run gradlew installMobile to create and install the .ipa on a connected device.
+  run gradlew idea to create IntelliJ IDEA project files.
+ */
+import org.apache.tools.ant.taskdefs.condition.Os
+
+buildscript {
+    repositories {
+        mavenLocal()
+        maven {
+            url repoManagerURL + 'repo'
+            credentials {
+                username = mavenUsername
+                password = mavenPassword
+            }
+        }
+    }
+
+    dependencies {
+        classpath group: 'org.gradlefx', name: 'gradlefx', version: '1.3.1-FP'
+    }
+}
+
+apply plugin: 'gradlefx'
+apply plugin: 'ideafx'
+
+type = 'mobile'
+version = '0.1'
+
+mainClass = 'Main.as'
+playerVersion = '18.0'
+output = 'TestApp'
+
+def compilerOptions = [
+    '-swf-version=18',
+    '-advanced-telemetry'
+]
+
+repositories {
+    mavenLocal()
+    maven {
+        url repoManagerURL + 'repo'
+        credentials {
+            username = mavenUsername
+            password = mavenPassword
+        }
+    }
+}
+
+dependencies {
+    flexSDK group: 'com.feathersui', name: 'feathers-sdk-air18-bin', version: '2.3.0', ext: Os.isFamily(Os.FAMILY_WINDOWS) ? 'zip' : 'tar.gz'
+
+    merged group: 'com.feathersui', name: 'MetalWorksMobileTheme', version: '2016-01-08', ext: 'swc'
+
+    //merged group: 'com.funkypanda', name: 'aseanDCB', version: '2016-03-09', ext: 'ane'
+}
+
+additionalCompilerOptions = compilerOptions
+
+compileFlex.inputs.property('additionalCompilerOptions', additionalCompilerOptions);
+
+sdkAutoInstall {
+    showPrompts = false
+}
+
+airMobile {
+    platform = 'android'
+    outputExtension = 'apk'
+    target = 'apk-captive-runtime'
+}
+
+air {
+    keystore = 'certificates/development.p12';
+    storepass = '0';
+    applicationDescriptor = 'src/main/resources/application-descriptor.xml';
+    fileOptions = [
+        '-C','src/main/resources',
+        '.'
+    ]
+}
+
+///////////////////////////////////////// wrapper
+task wrapper(type: Wrapper) {
+    group = 'Buildmaster'
+    description = 'Generates gradlew and gradlew.bat bootstrap scripts.'
+    gradleVersion = '2.6'
+    jarFile = 'gradle/wrapper/gradle.jar'
+}

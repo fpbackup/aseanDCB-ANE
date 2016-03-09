@@ -1,0 +1,13 @@
+aseanDCB-flash/target/*
+aseanDCB-flash/.idea/*
+aseanDCB-ios/target/*
+aseanDCB-android/target/*
+aseanDCB-android/.idea/*
+aseanDCB-android/gen-external-apklibs/*
+testapp/target/*
+testapp/.gradle/*
+testapp/build/*
+testapp/.idea/*
+testapp/certificates/*
+.idea/*
+**.iml
