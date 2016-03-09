@@ -16,7 +16,7 @@ public class Extension implements FREExtension
     {
         if (context != null) {
             Log.d(TAG, eventCode + " " + message);
-            context.dispatchStatusEventAsync(message, eventCode);
+            context.dispatchStatusEventAsync(eventCode, message);
         }
         else {
             Log.e(TAG, "Extension context is null, was the extension disposed? Tried to send event " +
@@ -48,7 +48,7 @@ public class Extension implements FREExtension
     {
         Log.d(TAG, message);
         if (context != null) {
-            context.dispatchStatusEventAsync(message, FlashConstants.DEBUG);
+            context.dispatchStatusEventAsync(FlashConstants.DEBUG, message);
         }
     }
 
@@ -56,7 +56,7 @@ public class Extension implements FREExtension
     {
         Log.e(TAG, message);
         if (context != null) {
-            context.dispatchStatusEventAsync(message, FlashConstants.ERROR);
+            context.dispatchStatusEventAsync(FlashConstants.ERROR, message);
         }
     }
 }

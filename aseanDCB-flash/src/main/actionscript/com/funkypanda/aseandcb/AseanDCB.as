@@ -62,7 +62,7 @@ import com.funkypanda.aseandcb.events.AseanDCBDebugEvent;
                     break;
                 default:
                     dispatchEvent(new AseanDCBDebugEvent(AseanDCBDebugEvent.ERROR,
-                            "Unknown event type received from the ANE. Data: " + event.level));
+                            "Unknown event type received from the ANE:" + event.code + " Data: " + event.level));
                     break;
             }
         }
