@@ -44,6 +44,22 @@ package com.funkypanda.aseandcb
         // API
         //////////////////////////////////////////////////////////////////////////////////////
 
+        public function payAutoDetectCountry(successMsg : String, prices : Vector.<String>,
+                                      itemName : String, forestID : String, forestKey : String) : void
+        {
+            if (isAndroid)
+            {
+                var pricesArr : Array = [];
+                for (var i:int = 0; i < prices.length; i++) {
+                    pricesArr.push(prices[i]);
+                }
+                _extContext.call("aseanDCBPayDetect", successMsg, pricesArr, itemName, forestID, forestKey);
+            }
+            else {
+                dispatchEvent(new AseanDCBDebugEvent(AseanDCBDebugEvent.DEBUG, "The AseanDCB ANE works only on Android"));
+            }
+        }
+
         public function pay(country : String, successMsg : String, itemName : String,
                             forestID : String, forestKey : String, price : String) : void
         {

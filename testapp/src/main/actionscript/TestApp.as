@@ -141,6 +141,17 @@ public class TestApp extends Sprite
 
         button = new Button();
         button.addEventListener(Event.TRIGGERED, function (evt : Event) : void {
+            // prices must be for {Malaysia, Indonesia, Placeholder, Singapore, Sri Lanka}
+            aseanDCB.payAutoDetectCountry("sample success message",
+                    new <String>["100", "10000", "placeholder", "3", "100"],
+                    "Sample item name", "HMEINV604178575" , "NIKRCY676604865");
+        });
+        button.label = "pay DetectCountry";
+        button.validate();
+        container.addChild(button);
+
+        button = new Button();
+        button.addEventListener(Event.TRIGGERED, function (evt : Event) : void {
             log("is country available: " + aseanDCB.isCountryAvailable());
         });
         button.label = "isCountryAvailable";

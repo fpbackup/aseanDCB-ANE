@@ -37,15 +37,22 @@ public class PurchaseActivity extends Activity implements AseandcbResult {
         Bundle extras = getIntent().getExtras();
         PurchaseIntentData dat = (PurchaseIntentData) extras.getSerializable("purchaseData");
 
-        Extension.log("Starting purchase process for '" + dat.item + "' with price '" + dat.price +
-                      "', payment type '" + dat.paymentType + "' and country '" + dat.country + "'");
         if (dat.paymentType == PurchaseIntentData.PaymentTypes.DIRECT_CARRIER_BILLING)
         {
+            Extension.log("Starting DCB purchase process for '" + dat.item + "' with price '" + dat.price +
+                    "' and country '" + dat.country + "'");
             Extension.aseandcb.AseandcbPay(this, dat.country, dat.successMsg, dat.price, dat.item, dat.forestID , dat.forestKey);
         }
         else if (dat.paymentType == PurchaseIntentData.PaymentTypes.VOUCHER)
         {
+            Extension.log("Starting Voucher purchase process for '" + dat.item + "' and country '" + dat.country + "'");
             Extension.aseandcb.AseandcbPay(this, dat.country, dat.successMsg, dat.item, dat.forestID , dat.forestKey);
+        }
+        else if (dat.paymentType == PurchaseIntentData.PaymentTypes.PAY_DETECT)
+        {
+            Extension.log("Starting autoDetect purchase process for '" + dat.item + "' with prices '" + dat.prices + "'");
+            String[] pricesArr = dat.prices.toArray(new String[dat.prices.size()]);
+            Extension.aseandcb.AseandcbPayDetect(this, dat.successMsg, pricesArr, dat.item, dat.forestID , dat.forestKey);
         }
         else
         {
