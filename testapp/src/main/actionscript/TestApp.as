@@ -7,8 +7,6 @@ import com.funkypanda.aseandcb.events.AseanDCBDebugEvent;
 import com.funkypanda.aseandcb.events.AseanDCBPayErrorEvent;
 import com.funkypanda.aseandcb.events.AseanDCBPaySuccessEvent;
 
-import feathers.controls.Alert;
-
 import feathers.controls.Button;
 import feathers.controls.Label;
 import feathers.controls.LayoutGroup;
@@ -35,8 +33,6 @@ public class TestApp extends Sprite
     private var buttonBarHeight : uint = 405;
 
     private var aseanDCB : AseanDCB;
-
-    private var countryList : PickerList;
 
     public function TestApp()
     {
@@ -75,7 +71,13 @@ public class TestApp extends Sprite
             container.width = stage.stageWidth;
         });
 
-        countryList = new PickerList();
+        var countryList : PickerList = new PickerList();
+        countryList.addEventListener(Event.OPEN, function(evt : Event):void{
+            logTF.alpha = 0;
+        });
+        countryList.addEventListener(Event.CLOSE, function(evt : Event):void{
+            logTF.alpha = 1;
+        });
         countryList.listProperties.@itemRendererProperties.labelField = "text";
         countryList.labelField = "text";
         countryList.dataProvider = new ListCollection (
@@ -99,6 +101,12 @@ public class TestApp extends Sprite
         priceG.addChild(priceLbl);
 
         var priceList : PickerList = new PickerList();
+        priceList.addEventListener(Event.OPEN, function(evt : Event):void{
+            logTF.alpha = 0;
+        });
+        priceList.addEventListener(Event.CLOSE, function(evt : Event):void{
+            logTF.alpha = 1;
+        });
         priceList.listProperties.@itemRendererProperties.labelField = "text";
         priceList.labelField = "text";
         priceList.dataProvider = new ListCollection (
@@ -128,6 +136,14 @@ public class TestApp extends Sprite
             }
         });
         button.label = "Make Payment";
+        button.validate();
+        container.addChild(button);
+
+        button = new Button();
+        button.addEventListener(Event.TRIGGERED, function (evt : Event) : void {
+            log("is country available: " + aseanDCB.isCountryAvailable());
+        });
+        button.label = "isCountryAvailable";
         button.validate();
         container.addChild(button);
 

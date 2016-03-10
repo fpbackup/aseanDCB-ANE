@@ -20,6 +20,7 @@ public class ExtensionContext extends FREContext
         Map<String, FREFunction> functionMap = new HashMap<String, FREFunction>();
 
         functionMap.put(FlashConstants.aseanDCBPay, new AseanDCBPayFunction());
+        functionMap.put(FlashConstants.isCountryAvailable, new IsCountryAvailableFunction());
 
         return functionMap;
     }

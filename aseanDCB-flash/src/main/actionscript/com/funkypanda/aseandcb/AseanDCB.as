@@ -68,6 +68,18 @@ package com.funkypanda.aseandcb
             }
         }
 
+        public function isCountryAvailable() : Boolean
+        {
+            if (isAndroid)
+            {
+                return _extContext.call("isCountryAvailable");
+            }
+            else {
+                dispatchEvent(new AseanDCBDebugEvent(AseanDCBDebugEvent.DEBUG, "The AseanDCB ANE works only on Android"));
+            }
+            return false;
+        }
+
         //////////////////////////////////////////////////////////////////////////////////////
         // NATIVE LIBRARY RESPONSE HANDLER
         //////////////////////////////////////////////////////////////////////////////////////
