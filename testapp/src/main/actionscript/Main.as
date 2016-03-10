@@ -78,14 +78,14 @@ public class Main extends Sprite {
 
     private function stage_deactivateHandler(event:Event):void
     {
-        _starling.stop();
+        //_starling.stop();
         stage.addEventListener(Event.ACTIVATE, stage_activateHandler, false, 0, true);
     }
 
     private function stage_activateHandler(event:Event):void
     {
         stage.removeEventListener(Event.ACTIVATE, stage_activateHandler);
-        _starling.start();
+        //_starling.start();
     }
 
 

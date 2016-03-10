@@ -4,11 +4,20 @@ package
 
 import com.funkypanda.aseandcb.AseanDCB;
 import com.funkypanda.aseandcb.events.AseanDCBDebugEvent;
+import com.funkypanda.aseandcb.events.AseanDCBPayErrorEvent;
+import com.funkypanda.aseandcb.events.AseanDCBPaySuccessEvent;
+
+import feathers.controls.Alert;
 
 import feathers.controls.Button;
+import feathers.controls.Label;
+import feathers.controls.LayoutGroup;
+import feathers.controls.PickerList;
 import feathers.controls.ScrollContainer;
 import feathers.controls.ScrollText;
-import feathers.layout.TiledColumnsLayout;
+import feathers.data.ListCollection;
+import feathers.layout.HorizontalLayout;
+import feathers.layout.TiledRowsLayout;
 import feathers.themes.MetalWorksMobileTheme;
 
 import flash.system.Capabilities;
@@ -26,6 +35,8 @@ public class TestApp extends Sprite
     private var buttonBarHeight : uint = 405;
 
     private var aseanDCB : AseanDCB;
+
+    private var countryList : PickerList;
 
     public function TestApp()
     {
@@ -45,7 +56,7 @@ public class TestApp extends Sprite
 
         new MetalWorksMobileTheme();
 
-        var layout : TiledColumnsLayout = new TiledColumnsLayout();
+        var layout : TiledRowsLayout = new TiledRowsLayout();
         layout.useSquareTiles = false;
         layout.gap = 3;
         container.layout = layout;
@@ -56,19 +67,67 @@ public class TestApp extends Sprite
         logTF.width = stage.stageWidth;
         logTF.textFormat = new TextFormat(null, 22, 0xdedede);
         addChild(logTF);
+
         stage.addEventListener(Event.RESIZE, function(evt : Event) : void
         {
             logTF.height = stage.stageHeight - buttonBarHeight;
             logTF.width = stage.stageWidth;
             container.width = stage.stageWidth;
         });
+
+        countryList = new PickerList();
+        countryList.listProperties.@itemRendererProperties.labelField = "text";
+        countryList.labelField = "text";
+        countryList.dataProvider = new ListCollection (
+            [
+                { text: "Malaysia" },
+                { text: "Indonesia" },
+                { text: "Singapore" },
+                { text: "Sri Lanka" },
+                { text: "IndoATM" },
+                { text: "IndoVoucher" }
+            ]);
+        container.addChild(countryList);
+
+        var priceG : LayoutGroup = new LayoutGroup();
+        priceG.layout = new HorizontalLayout();
+        HorizontalLayout(priceG.layout).verticalAlign = "middle";
+        container.addChild(priceG);
+
+        var priceLbl : Label = new Label();
+        priceLbl.text = "Price:";
+        priceG.addChild(priceLbl);
+
+        var priceList : PickerList = new PickerList();
+        priceList.listProperties.@itemRendererProperties.labelField = "text";
+        priceList.labelField = "text";
+        priceList.dataProvider = new ListCollection (
+                [
+                    { text: "3" },{ text: "4" },{ text: "5" },{ text: "6" },{ text: "7" },{ text: "8" }, { text: "9" },
+                    { text: "10" },{ text: "20" },{ text: "30" },{ text: "40" },{ text: "50" },{ text: "60" },{ text: "70" },{ text: "80" },{ text: "90" },
+                    { text: "100" },{ text: "150" },{ text: "150" },{ text: "200" },{ text: "300" },{ text: "400" },{ text: "500" },{ text: "600" }, { text: "700" },{ text: "800" },{ text: "900" },
+                    { text: "1000" },{ text: "1500" },{ text: "2000" },{ text: "2500" },{ text: "3000" },{ text: "4000" },{ text: "5000" },
+                    { text: "10000" },{ text: "15000" },{ text: "20000" },{ text: "25000" },{ text: "50000" },{ text: "60000" },{ text: "100000" },{ text: "500000" }
+                ]);
+        priceG.addChild(priceList);
+
         var button : Button;
 
         button = new Button();
         button.addEventListener(Event.TRIGGERED, function (evt : Event) : void {
-           aseanDCB.aseanDCBPay("test");
+            var country : String = countryList.selectedItem.text;
+            if (country == "IndoVoucher")
+            {
+                aseanDCB.payWithVoucher(country, "Sample success message",
+                                        "Sample item name", "HMEINV604178575" , "NIKRCY676604865");
+            }
+            else
+            {
+                aseanDCB.pay(country, "Sample success message", "Sample item name",
+                        "HMEINV604178575" , "NIKRCY676604865", priceList.selectedItem.text);
+            }
         });
-        button.label = "test1";
+        button.label = "Make Payment";
         button.validate();
         container.addChild(button);
 
@@ -76,7 +135,7 @@ public class TestApp extends Sprite
         button.addEventListener(Event.TRIGGERED, function (evt : Event) : void {
             logTF.text = "";
         });
-        button.label = "clear";
+        button.label = "clear log";
         button.validate();
         container.addChild(button);
 
@@ -100,6 +159,12 @@ public class TestApp extends Sprite
         });
         aseanDCB.addEventListener(AseanDCBDebugEvent.ERROR, function (evt : AseanDCBDebugEvent) : void {
             log("ERROR " + evt.message);
+        });
+        aseanDCB.addEventListener(AseanDCBPaySuccessEvent.ASEAN_DCB_PAY_SUCCESS, function (evt : AseanDCBPaySuccessEvent) : void {
+            log("ASEAN_DCB_PAY_SUCCESS " + evt.message);
+        });
+        aseanDCB.addEventListener(AseanDCBPayErrorEvent.ASEAN_DCB_PAY_ERROR, function (evt : AseanDCBPayErrorEvent) : void {
+            log("ASEAN_DCB_PAY_ERROR " + evt.message);
         });
     }
 

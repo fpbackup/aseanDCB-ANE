@@ -7,6 +7,7 @@ aseanDCB-android/gen-external-apklibs/*
 testapp/target/*
 testapp/.gradle/*
 testapp/build/*
+!testapp/build/TestApp.apk
 testapp/.idea/*
 testapp/certificates/*
 .idea/*
