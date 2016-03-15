@@ -2,8 +2,10 @@ package com.funkypanda.aseandcb.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.TypedValue;
+import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import com.forest_interactive.aseandcb.AseandcbResult;
 import com.funkypanda.aseandcb.Extension;
 import com.funkypanda.aseandcb.FlashConstants;
@@ -18,21 +20,29 @@ public class PurchaseActivity extends Activity implements AseandcbResult {
     {
         super.onCreate(savedInstanceState);
 
-        //////// test code
+        //////// finish button
         RelativeLayout relativeLayout = new RelativeLayout(this);
         RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.MATCH_PARENT,
                 RelativeLayout.LayoutParams.MATCH_PARENT);
-        TextView tv = new TextView(this);
-        tv.setText("Android purchase activity for AseanDCB payments");
+        setContentView(relativeLayout, rlp);
+
+        getWindow().getDecorView().setBackgroundColor(0x99000000);
+
+        Button finishButton = new Button(this);
+        finishButton.setText("Click to finish");
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
         lp.addRule(RelativeLayout.CENTER_IN_PARENT);
-        tv.setLayoutParams(lp);
-        relativeLayout.addView(tv);
-        setContentView(relativeLayout, rlp);
-        ////////
+        finishButton.setLayoutParams(lp);
+        finishButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+        finishButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        relativeLayout.addView(finishButton);
 
         Bundle extras = getIntent().getExtras();
         PurchaseIntentData dat = (PurchaseIntentData) extras.getSerializable("purchaseData");
