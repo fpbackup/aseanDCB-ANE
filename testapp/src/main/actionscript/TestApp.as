@@ -188,10 +188,10 @@ public class TestApp extends Sprite
             log("ERROR " + evt.message);
         });
         aseanDCB.addEventListener(AseanDCBPaySuccessEvent.ASEAN_DCB_PAY_SUCCESS, function (evt : AseanDCBPaySuccessEvent) : void {
-            log("ASEAN_DCB_PAY_SUCCESS " + evt.message);
+            log("ASEAN_DCB_PAY_SUCCESS " + evt.toString());
         });
         aseanDCB.addEventListener(AseanDCBPayErrorEvent.ASEAN_DCB_PAY_ERROR, function (evt : AseanDCBPayErrorEvent) : void {
-            log("ASEAN_DCB_PAY_ERROR " + evt.message);
+            log("ASEAN_DCB_PAY_ERROR " + evt.toString());
         });
     }
 
