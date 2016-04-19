@@ -106,7 +106,7 @@ package com.funkypanda.aseandcb
             var amountStr : String = result.amount.toLowerCase();
             var amount : Number = parseFloat(amountStr);
             var service : String = result.service.toLowerCase();
-            var success : Boolean = result.success.toLowerCase() == "true";
+            var success : Boolean = result.success;
             if (success)
             {
                 dispatchEvent( new AseanDCBPaySuccessEvent(amount, statusCode, service));
