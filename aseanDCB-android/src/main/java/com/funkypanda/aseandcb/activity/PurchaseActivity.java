@@ -20,7 +20,7 @@ import org.json.JSONObject;
 public class PurchaseActivity extends Activity implements AseandcbResult{
 
     private Aseandcb aseanDCB;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -28,7 +28,6 @@ public class PurchaseActivity extends Activity implements AseandcbResult{
         Bundle extras = getIntent().getExtras();
         PurchaseIntentData dat = (PurchaseIntentData) extras.getSerializable("purchaseData");
         aseanDCB = new Aseandcb(this, dat.forestID, dat.forestKey);
-        AdcbHelper helper = aseanDCB.getHelper(); // is this needed?
         //////// finish button
         RelativeLayout relativeLayout = new RelativeLayout(this);
         RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(
@@ -93,8 +92,12 @@ public class PurchaseActivity extends Activity implements AseandcbResult{
         amount = amount == null ? "UNDEFINED" : amount;
         service = service == null ? "UNDEFINED" : service;
 
+        AdcbHelper helper = aseanDCB.getHelper();
+        boolean success = helper.checkPayment(statusCode, service);
+
         JSONObject toRet = new JSONObject();
         try {
+            toRet.put("success", success);
             toRet.put("statusCode", statusCode);
             toRet.put("amount", amount);
             toRet.put("service", service);

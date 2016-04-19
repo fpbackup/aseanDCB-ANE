@@ -106,83 +106,14 @@ package com.funkypanda.aseandcb
             var amountStr : String = result.amount.toLowerCase();
             var amount : Number = parseFloat(amountStr);
             var service : String = result.service.toLowerCase();
-
-            if (service == "TelkomSel".toLowerCase())
+            var success : Boolean = result.success.toLowerCase() == "true";
+            if (success)
             {
-                if (statusCode == "1")
-                {
-                    dispatchEvent( new AseanDCBPaySuccessEvent(amount, statusCode, service));
-                }
-                else
-                {
-                    // TODO all these all failed?
-                    dispatchEvent( new AseanDCBPayErrorEvent(amount, statusCode, service));
-                }
-            }
-            if (service == "ATMBCA".toLowerCase() || service == "ATMBersama".toLowerCase() ||
-                service == "PulsaXL".toLowerCase() || service == "XLVoucher".toLowerCase() ||
-                service == "Sevelin".toLowerCase() || service == "Smartfren".toLowerCase())
-            {
-                if (statusCode == "success")
-                {
-                    dispatchEvent( new AseanDCBPaySuccessEvent(amount, statusCode, service));
-                }
-                else
-                {
-                    // SUCCESS is the only case scenario for successful transaction.
-                    // All other status codes denote failed transactions; including Pending and Waiting for confirmation.
-                    // Despite what these two status codes suggest, they denote failed transactions and the user has to be
-                    // prompted to go through the payment flow again. Balance will not be deducted.
-                    dispatchEvent( new AseanDCBPayErrorEvent(amount, statusCode, service));
-                }
-            }
-            else if (service == "TuneTalk".toLowerCase())
-            {
-                if (statusCode == "100")
-                {
-                    dispatchEvent( new AseanDCBPaySuccessEvent(amount, statusCode, service));
-                }
-                else
-                {
-                    dispatchEvent( new AseanDCBPayErrorEvent(amount, statusCode, service));
-                }
-            }
-            else if (service == "Maxis".toLowerCase())
-            {
-                if (statusCode == "0")
-                {
-                    dispatchEvent( new AseanDCBPaySuccessEvent(amount, statusCode, service));
-                }
-                else
-                {
-                    dispatchEvent( new AseanDCBPayErrorEvent(amount, statusCode, service));
-                }
-            }
-            else if (service == "M1".toLowerCase())
-            {
-                if (statusCode == "0")
-                {
-                    dispatchEvent( new AseanDCBPaySuccessEvent(amount, statusCode, service));
-                }
-                else
-                {
-                    dispatchEvent( new AseanDCBPayErrorEvent(amount, statusCode, service));
-                }
-            }
-            else if (service == "Dialog".toLowerCase())
-            {
-                if (statusCode == "success")
-                {
-                    dispatchEvent( new AseanDCBPaySuccessEvent(amount, statusCode, service));
-                }
-                else
-                {
-                    dispatchEvent( new AseanDCBPayErrorEvent(amount, statusCode, service));
-                }
+                dispatchEvent( new AseanDCBPaySuccessEvent(amount, statusCode, service));
             }
             else
             {
-                 dispatchEvent( new AseanDCBPayErrorEvent(amount, statusCode, "NOT IMPLEMENTED:" + service));
+                dispatchEvent( new AseanDCBPayErrorEvent(amount, statusCode, service));
             }
         }
 

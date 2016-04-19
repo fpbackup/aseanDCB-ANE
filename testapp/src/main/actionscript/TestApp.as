@@ -84,10 +84,10 @@ public class TestApp extends Sprite
             [
                 { text: "Malaysia" },
                 { text: "Indonesia" },
+                { text: "Philippines" },
                 { text: "Singapore" },
                 { text: "Sri Lanka" },
-                { text: "IndoATM" },
-                { text: "IndoVoucher" }
+                { text: "Thailand" }
             ]);
         container.addChild(countryList);
 
@@ -118,6 +118,7 @@ public class TestApp extends Sprite
                     { text: "10000" },{ text: "15000" },{ text: "20000" },{ text: "25000" },{ text: "50000" },{ text: "60000" },{ text: "100000" },{ text: "500000" }
                 ]);
         priceG.addChild(priceList);
+        priceList.selectedIndex = 11;
 
         var button : Button;
 
@@ -133,9 +134,9 @@ public class TestApp extends Sprite
 
         button = new Button();
         button.addEventListener(Event.TRIGGERED, function (evt : Event) : void {
-            // prices must be for {Malaysia, Indonesia, Placeholder, Singapore, Sri Lanka}
+            // prices must be for {Malaysia, Indonesia, Philippines, Singapore, Sri Lanka, Thailand}
             aseanDCB.payAutoDetectCountry("sample success message",
-                    new <String>["100", "10000", "4", "3", "100"],
+                    new <String>["100", "10000", "50", "3", "50", "50"],
                     "Sample item name", "HMEINV604178575" , "NIKRCY676604865");
         });
         button.label = "pay DetectCountry";
