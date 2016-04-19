@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<application xmlns="http://ns.adobe.com/air/application/18.0">
+<application xmlns="http://ns.adobe.com/air/application/21.0">
 
     <id>com.funkypandagame.aseanDCBTest</id>
     <filename>Carrier Billing Test</filename>
@@ -11,7 +11,7 @@
         <visible>true</visible>
         <aspectRatio>any</aspectRatio>
         <autoOrients>true</autoOrients>
-        <fullScreen>true</fullScreen>
+        <fullScreen>false</fullScreen>
         <renderMode>direct</renderMode>
         <depthAndStencil>true</depthAndStencil>
     </initialWindow>
@@ -37,11 +37,15 @@
             <![CDATA[
 				<manifest android:installLocation="auto">
                     <uses-permission android:name="android.permission.INTERNET"/>
+
                     <!-- AseanDCB -->
                     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
                     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
                     <uses-permission android:name="android.permission.SEND_SMS"/>
                     <uses-permission android:name="android.permission.READ_SMS"/>
+                    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+                    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+                    <uses-permission android:name="android.permission.WRITE_SMS"/>
 
                     <application>
                         <activity android:name="com.funkypanda.aseandcb.activity.PurchaseActivity"
@@ -49,8 +53,15 @@
                                                   android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
 
                         <activity android:name="com.mimopay.MimopayActivity"
-                                                  android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
-                                                  android:windowSoftInputMode="stateUnspecified|adjustPan" />
+                                  android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
+                                  android:windowSoftInputMode="stateUnspecified|adjustPan"/>
+
+                        <activity android:name="com.codapayments.sdk.pay.CodaWeb"
+                                 android:configChanges="orientation|screenSize"
+                                 android:alwaysRetainTaskState="true"
+                                 android:screenOrientation="unspecified"/>
+
+                        <receiver android:name="com.codapayments.sdk.message.PendingTxnReceiver" android:enabled="true"/>
                     </application>
                 </manifest>
 			]]>

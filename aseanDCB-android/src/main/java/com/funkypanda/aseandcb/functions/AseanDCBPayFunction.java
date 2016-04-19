@@ -16,9 +16,9 @@ public class AseanDCBPayFunction implements FREFunction
     @Override
     public FREObject call(FREContext ctx, FREObject[] args)
     {
-        if (args.length != 6 && args.length != 5)
+        if (args.length != 6)
         {
-            Extension.logError("aseanDCBPay called with " + args.length + " params, it needs 5 or 6.");
+            Extension.logError("aseanDCBPay called with " + args.length + " params, it needs 6.");
             return null;
         }
         PurchaseIntentData dat;
@@ -27,16 +27,8 @@ public class AseanDCBPayFunction implements FREFunction
         final String item = ANEUtils.getStringFromFREObject(args[2]);
         final String forestID = ANEUtils.getStringFromFREObject(args[3]);
         final String forestKey = ANEUtils.getStringFromFREObject(args[4]);
-        if (args.length == 6)
-        {
-            final String price = ANEUtils.getStringFromFREObject(args[5]);
-            dat = new PurchaseIntentData( country, successMsg, item, forestID, forestKey, price);
-        }
-        else
-        {
-            // voucher payment
-            dat = new PurchaseIntentData( country, successMsg, item, forestID, forestKey);
-        }
+        final String price = ANEUtils.getStringFromFREObject(args[5]);
+        dat = new PurchaseIntentData( country, successMsg, item, forestID, forestKey, price);
         Intent i = new Intent(ctx.getActivity().getApplicationContext(), PurchaseActivity.class);
         i.putExtra("purchaseData", dat);
         ctx.getActivity().startActivity(i);

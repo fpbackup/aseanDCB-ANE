@@ -11,7 +11,6 @@ public class FlashConstants {
 
     ////////////////////////////////////////////////////////////////////// function names
     final public static String aseanDCBPay = "aseanDCBPay";
-    final public static String isCountryAvailable = "isCountryAvailable";
     final public static String aseanDCBPayDetect = "aseanDCBPayDetect";
 
 }

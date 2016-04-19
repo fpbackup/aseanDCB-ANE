@@ -65,35 +65,12 @@ package com.funkypanda.aseandcb
         {
             if (isAndroid)
             {
+                trace("PAY")
                 _extContext.call("aseanDCBPay", country, successMsg, itemName, forestID, forestKey, price);
             }
             else {
                 dispatchEvent(new AseanDCBDebugEvent(AseanDCBDebugEvent.DEBUG, "The AseanDCB ANE works only on Android"));
             }
-        }
-
-        public function payWithVoucher(country : String, successMsg : String, itemName : String,
-                                       forestID : String, forestKey : String) : void
-        {
-            if (isAndroid)
-            {
-                _extContext.call("aseanDCBPay", country, successMsg, itemName, forestID, forestKey);
-            }
-            else {
-                dispatchEvent(new AseanDCBDebugEvent(AseanDCBDebugEvent.DEBUG, "The AseanDCB ANE works only on Android"));
-            }
-        }
-
-        public function isCountryAvailable() : Boolean
-        {
-            if (isAndroid)
-            {
-                return _extContext.call("isCountryAvailable");
-            }
-            else {
-                dispatchEvent(new AseanDCBDebugEvent(AseanDCBDebugEvent.DEBUG, "The AseanDCB ANE works only on Android"));
-            }
-            return false;
         }
 
         //////////////////////////////////////////////////////////////////////////////////////

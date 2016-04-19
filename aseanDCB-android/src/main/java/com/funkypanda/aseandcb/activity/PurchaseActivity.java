@@ -6,20 +6,29 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+
+import com.forest_interactive.aseandcb.AdcbHelper;
+import com.forest_interactive.aseandcb.Aseandcb;
 import com.forest_interactive.aseandcb.AseandcbResult;
+
 import com.funkypanda.aseandcb.Extension;
 import com.funkypanda.aseandcb.FlashConstants;
 import com.funkypanda.aseandcb.vo.PurchaseIntentData;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class PurchaseActivity extends Activity implements AseandcbResult {
+public class PurchaseActivity extends Activity implements AseandcbResult{
 
+    private Aseandcb aseanDCB;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
+        Bundle extras = getIntent().getExtras();
+        PurchaseIntentData dat = (PurchaseIntentData) extras.getSerializable("purchaseData");
+        aseanDCB = new Aseandcb(this, dat.forestID, dat.forestKey);
+        AdcbHelper helper = aseanDCB.getHelper(); // is this needed?
         //////// finish button
         RelativeLayout relativeLayout = new RelativeLayout(this);
         RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(
@@ -44,25 +53,29 @@ public class PurchaseActivity extends Activity implements AseandcbResult {
         });
         relativeLayout.addView(finishButton);
 
-        Bundle extras = getIntent().getExtras();
-        PurchaseIntentData dat = (PurchaseIntentData) extras.getSerializable("purchaseData");
-
         if (dat.paymentType == PurchaseIntentData.PaymentTypes.DIRECT_CARRIER_BILLING)
         {
             Extension.log("Starting DCB purchase process for '" + dat.item + "' with price '" + dat.price +
                     "' and country '" + dat.country + "'");
-            Extension.aseandcb.AseandcbPay(this, dat.country, dat.successMsg, dat.price, dat.item, dat.forestID , dat.forestKey);
-        }
-        else if (dat.paymentType == PurchaseIntentData.PaymentTypes.VOUCHER)
-        {
-            Extension.log("Starting Voucher purchase process for '" + dat.item + "' and country '" + dat.country + "'");
-            Extension.aseandcb.AseandcbPay(this, dat.country, dat.successMsg, dat.item, dat.forestID , dat.forestKey);
+            try {
+                aseanDCB.AseandcbPay(dat.country, dat.price, dat.successMsg, dat.item);
+            }
+            catch (Exception ex) {
+                Extension.logError("DCB purchase failed " + ex.toString());
+                finish();
+            }
         }
         else if (dat.paymentType == PurchaseIntentData.PaymentTypes.PAY_DETECT)
         {
-            Extension.log("Starting autoDetect purchase process for '" + dat.item + "' with prices '" + dat.prices + "'");
+            Extension.log("Starting country autoDetect purchase process for '" + dat.item + "' with prices '" + dat.prices + "'");
             String[] pricesArr = dat.prices.toArray(new String[dat.prices.size()]);
-            Extension.aseandcb.AseandcbPayDetect(this, dat.successMsg, pricesArr, dat.item, dat.forestID , dat.forestKey);
+            try {
+                aseanDCB.AseandcbPay(dat.successMsg, pricesArr, dat.item);
+            }
+            catch (Exception ex) {
+                Extension.logError("country autoDetect purchase failed " + ex.toString());
+                finish();
+            }
         }
         else
         {
@@ -71,8 +84,8 @@ public class PurchaseActivity extends Activity implements AseandcbResult {
         }
     }
 
-    @Override
-    public void AseandcbChargingResult(String statusCode, String amount, String service) {
+   // @Override
+    public void AseandcbChargingResult(String transactionID, String statusCode, String amount, String service) {
 
         Extension.dispatchStatusEventAsync(FlashConstants.DEBUG, "Received payment result " + statusCode + " " + amount + " " + service);
 
@@ -89,7 +102,6 @@ public class PurchaseActivity extends Activity implements AseandcbResult {
             Extension.dispatchStatusEventAsync(FlashConstants.ASEAN_DCB_PAY_ERROR, statusCode + " " + amount + " " + service + " JSONerror:" + e);
         }
         Extension.dispatchStatusEventAsync(FlashConstants.ASEAN_DCB_PAY_RESULT, toRet.toString());
-
         finish();
     }
 }

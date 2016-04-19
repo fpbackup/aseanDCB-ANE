@@ -5,7 +5,7 @@ import java.util.List;
 
 public class PurchaseIntentData implements Serializable {
 
-    public enum PaymentTypes {DIRECT_CARRIER_BILLING, VOUCHER, PAY_DETECT}
+    public enum PaymentTypes {DIRECT_CARRIER_BILLING, PAY_DETECT}
 
     public String country;
     public final String successMsg;
@@ -30,20 +30,6 @@ public class PurchaseIntentData implements Serializable {
         this.forestKey = forestKey;
         this.price = price;
         this.paymentType = PaymentTypes.DIRECT_CARRIER_BILLING;
-    }
-
-    // voucher payment, this does not need price
-    public PurchaseIntentData(String country,
-                              String successMsg,
-                              String item,
-                              String forestID,
-                              String forestKey) {
-        this.country = country;
-        this.successMsg = successMsg;
-        this.item = item;
-        this.forestID = forestID;
-        this.forestKey = forestKey;
-        this.paymentType = PaymentTypes.VOUCHER;
     }
 
     // auto detect country payment

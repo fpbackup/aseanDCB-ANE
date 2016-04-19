@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:text="@string/ok" />
 
 </RelativeLayout>
-<!-- From: file:/C:/Users/User/Documents/Android/Aseandcb/aseandcb/src/main/res/layout/telkomsel.xml -->
+<!-- From: file:/C:/Users/Abdulla.hainum/Documents/Android/Aseandcb/aseandcb/src/main/res/layout/telkomsel.xml -->

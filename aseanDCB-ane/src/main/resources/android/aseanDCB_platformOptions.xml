@@ -1,9 +1,13 @@
 <platform xmlns="http://ns.adobe.com/air/extension/18.0">
 
     <packagedDependencies>
-        <packagedDependency>aseandcbv1.411.jar</packagedDependency>
-        <packagedDependency>duniagamespurchaselib.jar</packagedDependency>
+        <packagedDependency>aseanDCB-1.5.jar</packagedDependency>
+        <packagedDependency>android-async-http-1.4.9.jar</packagedDependency>
+        <packagedDependency>codasdk.jar</packagedDependency>
         <packagedDependency>ForestIndoNiaga.jar</packagedDependency>
+        <packagedDependency>httpclient-4.4.1.1.jar</packagedDependency>
+        <packagedDependency>duniagamespurchaselib.jar</packagedDependency>
+        <packagedDependency>mcoin.jar</packagedDependency>
         <packagedDependency>Mimopay-3.2.jar</packagedDependency>
     </packagedDependencies>
 

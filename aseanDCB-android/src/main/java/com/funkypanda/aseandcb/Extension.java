@@ -10,7 +10,6 @@ public class Extension implements FREExtension
 {
     public static final String TAG = "AseanDCB";
     private static ExtensionContext context;
-    public static Aseandcb aseandcb;
 
     public static void dispatchStatusEventAsync(String eventCode, String message)
     {
@@ -41,7 +40,6 @@ public class Extension implements FREExtension
     }
 
     public void initialize() {
-        aseandcb = new Aseandcb();
     }
 
     public static void log(String message)

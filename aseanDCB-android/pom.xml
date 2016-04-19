@@ -31,7 +31,7 @@
         <dependency>
             <groupId>com.forest_interactive</groupId>
             <artifactId>aseandcbv</artifactId>
-            <version>1.411</version>
+            <version>1.5</version>
             <type>aar</type>
             <scope>provided</scope>
         </dependency>

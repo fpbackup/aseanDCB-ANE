@@ -124,16 +124,8 @@ public class TestApp extends Sprite
         button = new Button();
         button.addEventListener(Event.TRIGGERED, function (evt : Event) : void {
             var country : String = countryList.selectedItem.text;
-            if (country == "IndoVoucher")
-            {
-                aseanDCB.payWithVoucher(country, "Sample success message",
-                                        "Sample item name", "HMEINV604178575" , "NIKRCY676604865");
-            }
-            else
-            {
-                aseanDCB.pay(country, "Sample success message", "Sample item name",
-                        "HMEINV604178575" , "NIKRCY676604865", priceList.selectedItem.text);
-            }
+            aseanDCB.pay(country, "Sample success message", "Sample item name",
+                    "HMEINV604178575" , "NIKRCY676604865", priceList.selectedItem.text);
         });
         button.label = "Make Payment";
         button.validate();
@@ -143,18 +135,10 @@ public class TestApp extends Sprite
         button.addEventListener(Event.TRIGGERED, function (evt : Event) : void {
             // prices must be for {Malaysia, Indonesia, Placeholder, Singapore, Sri Lanka}
             aseanDCB.payAutoDetectCountry("sample success message",
-                    new <String>["100", "10000", "placeholder", "3", "100"],
+                    new <String>["100", "10000", "4", "3", "100"],
                     "Sample item name", "HMEINV604178575" , "NIKRCY676604865");
         });
         button.label = "pay DetectCountry";
-        button.validate();
-        container.addChild(button);
-
-        button = new Button();
-        button.addEventListener(Event.TRIGGERED, function (evt : Event) : void {
-            log("is country available: " + aseanDCB.isCountryAvailable());
-        });
-        button.label = "isCountryAvailable";
         button.validate();
         container.addChild(button);
 
