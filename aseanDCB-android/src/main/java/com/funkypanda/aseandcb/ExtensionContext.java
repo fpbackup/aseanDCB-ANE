@@ -21,6 +21,7 @@ public class ExtensionContext extends FREContext
 
         functionMap.put(FlashConstants.aseanDCBPay, new AseanDCBPayFunction());
         functionMap.put(FlashConstants.aseanDCBPayDetect, new AseanDCBPayDetectFunction());
+        functionMap.put(FlashConstants.aseanDCBAvailable, new AseanDCBAvailableFunction());
 
         return functionMap;
     }

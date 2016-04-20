@@ -65,11 +65,25 @@ package com.funkypanda.aseandcb
         {
             if (isAndroid)
             {
-                trace("PAY")
                 _extContext.call("aseanDCBPay", country, successMsg, itemName, forestID, forestKey, price);
             }
             else {
                 dispatchEvent(new AseanDCBDebugEvent(AseanDCBDebugEvent.DEBUG, "The AseanDCB ANE works only on Android"));
+            }
+        }
+
+        /**
+         * SIM card based country check whether AseanDCB payment method is usable
+         */
+        public function isAvailable(forestID : String, forestKey : String) : Boolean
+        {
+            if (isAndroid)
+            {
+                return _extContext.call("aseanDCBAvailable", forestID, forestKey);
+            }
+            else
+            {
+                return false;
             }
         }
 

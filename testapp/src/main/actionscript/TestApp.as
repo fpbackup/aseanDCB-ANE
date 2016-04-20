@@ -30,7 +30,7 @@ public class TestApp extends Sprite
     private const container: ScrollContainer = new ScrollContainer();
     private static var _instance : TestApp;
     private var logTF : ScrollText;
-    private var buttonBarHeight : uint = 405;
+    private var buttonBarHeight : uint;
 
     private var aseanDCB : AseanDCB;
 
@@ -145,13 +145,21 @@ public class TestApp extends Sprite
 
         button = new Button();
         button.addEventListener(Event.TRIGGERED, function (evt : Event) : void {
+            aseanDCB.isAvailable("HMEINV604178575" , "NIKRCY676604865");
+        });
+        button.label = "is AseanDCB available";
+        button.validate();
+        container.addChild(button);
+
+        button = new Button();
+        button.addEventListener(Event.TRIGGERED, function (evt : Event) : void {
             logTF.text = "";
         });
         button.label = "clear log";
         button.validate();
         container.addChild(button);
 
-        buttonBarHeight = Math.ceil(0.5 * container.numChildren) * 60 + 5;
+        buttonBarHeight = Math.ceil(0.5 * container.numChildren) * 90;
         container.height = buttonBarHeight;
         logTF.height = stage.stageHeight - buttonBarHeight;
         logTF.y = buttonBarHeight + container.y;
