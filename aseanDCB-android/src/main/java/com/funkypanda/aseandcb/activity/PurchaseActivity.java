@@ -60,7 +60,7 @@ public class PurchaseActivity extends Activity implements AseandcbResult{
                 aseanDCB.AseandcbPay(dat.country, dat.price, dat.successMsg, dat.item);
             }
             catch (Exception ex) {
-                Extension.logError("DCB purchase failed " + ex.toString());
+                Extension.dispatchStatusEventAsync(FlashConstants.ASEAN_DCB_PAY_ERROR, ex.toString());
                 finish();
             }
         }
@@ -72,13 +72,13 @@ public class PurchaseActivity extends Activity implements AseandcbResult{
                 aseanDCB.AseandcbPay(dat.successMsg, pricesArr, dat.item);
             }
             catch (Exception ex) {
-                Extension.logError("country autoDetect purchase failed " + ex.toString());
+                Extension.dispatchStatusEventAsync(FlashConstants.ASEAN_DCB_PAY_ERROR, ex.toString());
                 finish();
             }
         }
         else
         {
-            Extension.logError("Not recognized payment type!");
+            Extension.dispatchStatusEventAsync(FlashConstants.ASEAN_DCB_PAY_ERROR, "Not recognized payment type");
             finish();
         }
     }
