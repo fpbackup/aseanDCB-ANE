@@ -153,13 +153,29 @@ public class TestApp extends Sprite
 
         button = new Button();
         button.addEventListener(Event.TRIGGERED, function (evt : Event) : void {
+            aseanDCB.payDebugSuccess("" , null, "", "", "");
+        });
+        button.label = "fake good payment";
+        button.validate();
+        container.addChild(button);
+
+        button = new Button();
+        button.addEventListener(Event.TRIGGERED, function (evt : Event) : void {
+            aseanDCB.payDebugFail("" , null, "", "", "");
+        });
+        button.label = "fake bad payment";
+        button.validate();
+        container.addChild(button);
+
+        button = new Button();
+        button.addEventListener(Event.TRIGGERED, function (evt : Event) : void {
             logTF.text = "";
         });
         button.label = "clear log";
         button.validate();
         container.addChild(button);
 
-        buttonBarHeight = Math.ceil(0.5 * container.numChildren) * 90;
+        buttonBarHeight = Math.ceil(0.5 * container.numChildren) * 86;
         container.height = buttonBarHeight;
         logTF.height = stage.stageHeight - buttonBarHeight;
         logTF.y = buttonBarHeight + container.y;

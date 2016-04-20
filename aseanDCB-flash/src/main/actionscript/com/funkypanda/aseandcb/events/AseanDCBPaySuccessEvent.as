@@ -9,13 +9,15 @@ package com.funkypanda.aseandcb.events
         private var _amount : Number;
         private var _statusCode : String;
         private var _service : String;
+        private var _transactionID : String;
 
-        public function AseanDCBPaySuccessEvent(amount : Number, statusCode : String, service : String)
+        public function AseanDCBPaySuccessEvent(amount : Number, statusCode : String, service : String, transactionID : String)
         {
             super(ASEAN_DCB_PAY_SUCCESS);
             _amount = amount;
             _statusCode = statusCode;
             _service = service;
+            _transactionID = transactionID;
         }
 
         public function get amount():Number
@@ -33,14 +35,19 @@ package com.funkypanda.aseandcb.events
             return _service;
         }
 
+        public function get transactionID():String
+        {
+            return _transactionID;
+        }
+
         override public function clone() : Event
         {
-            return new AseanDCBPaySuccessEvent(_amount, _statusCode, _service);
+            return new AseanDCBPaySuccessEvent(_amount, _statusCode, _service, _transactionID);
         }
 
         override public function toString() : String
         {
-            return "service: " + _service + " amount:" + _amount + " status:" + _statusCode;
+            return "service: " + _service + " amount:" + _amount + " status:" + _statusCode + " transactionID:" + _transactionID;
         }
     }
 }

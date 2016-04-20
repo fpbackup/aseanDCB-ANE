@@ -86,8 +86,10 @@ public class PurchaseActivity extends Activity implements AseandcbResult{
    // @Override
     public void AseandcbChargingResult(String transactionID, String statusCode, String amount, String service) {
 
-        Extension.dispatchStatusEventAsync(FlashConstants.DEBUG, "Received payment result " + statusCode + " " + amount + " " + service);
+        Extension.dispatchStatusEventAsync(FlashConstants.DEBUG,
+                "Received payment result " + statusCode + " " + amount + " " + service + " " + transactionID);
 
+        transactionID = transactionID == null ? "UNDEFINED" : transactionID;
         statusCode = statusCode == null ? "UNDEFINED" : statusCode;
         amount = amount == null ? "UNDEFINED" : amount;
         service = service == null ? "UNDEFINED" : service;
@@ -97,12 +99,14 @@ public class PurchaseActivity extends Activity implements AseandcbResult{
 
         JSONObject toRet = new JSONObject();
         try {
+            toRet.put("transactionID", transactionID);
             toRet.put("success", success);
             toRet.put("statusCode", statusCode);
             toRet.put("amount", amount);
             toRet.put("service", service);
         } catch (JSONException e) {
-            Extension.dispatchStatusEventAsync(FlashConstants.ASEAN_DCB_PAY_ERROR, statusCode + " " + amount + " " + service + " JSONerror:" + e);
+            Extension.dispatchStatusEventAsync(FlashConstants.ASEAN_DCB_PAY_ERROR,
+                    statusCode + " " + amount + " " + service + " " + transactionID + " JSONerror:" + e);
         }
         Extension.dispatchStatusEventAsync(FlashConstants.ASEAN_DCB_PAY_RESULT, toRet.toString());
         finish();

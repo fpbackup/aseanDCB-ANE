@@ -9,8 +9,9 @@ package com.funkypanda.aseandcb
     import flash.events.StatusEvent;
     import flash.external.ExtensionContext;
     import flash.system.Capabilities;
+import flash.utils.setTimeout;
 
-    public class AseanDCB extends EventDispatcher
+public class AseanDCB extends EventDispatcher
     {
 
         public static const EXT_CONTEXT_ID : String = "com.funkypanda.aseanDCB";
@@ -31,8 +32,11 @@ package com.funkypanda.aseandcb
         {
             if (_instance == null)
             {
-                _extContext = ExtensionContext.createExtensionContext(EXT_CONTEXT_ID, null);
-                _extContext.addEventListener(StatusEvent.STATUS, extension_statusHandler);
+                if (isAndroid)
+                {
+                    _extContext = ExtensionContext.createExtensionContext(EXT_CONTEXT_ID, null);
+                    _extContext.addEventListener(StatusEvent.STATUS, extension_statusHandler);
+                }
             }
             else
             {
@@ -87,6 +91,29 @@ package com.funkypanda.aseandcb
             }
         }
 
+        /**
+         * Makes a debug payment that always succeeds. The transaction ID is not a real one, just a random string.
+         */
+        public function payDebugSuccess(successMsg : String, prices : Vector.<String>,
+                                        itemName : String, forestID : String, forestKey : String) : void
+        {
+            setTimeout(function():void
+            {
+                parsePayResult({transactionID:"DEBUG_PAYMENT_OK", statusCode:"OK", amount:"100", service:"TelkomSel", success:true});
+            }, 1000);
+        }
+
+        /**
+         * Makes a debug payment that always fails. The transaction ID is not a real one, just a random string.
+         */
+        public function payDebugFail(successMsg : String, prices : Vector.<String>,
+                                     itemName : String, forestID : String, forestKey : String) : void
+        {
+            setTimeout(function():void
+            {
+                parsePayResult({transactionID:"DEBUG_PAYMENT_FAIL", statusCode:"payment error -1", amount:"345", service:"SmartFren", success:false});
+            }, 1000);
+        }
         //////////////////////////////////////////////////////////////////////////////////////
         // NATIVE LIBRARY RESPONSE HANDLER
         //////////////////////////////////////////////////////////////////////////////////////
@@ -116,6 +143,7 @@ package com.funkypanda.aseandcb
 
         private function parsePayResult(result : Object) : void
         {
+            var transactionID : String = result.transactionID;
             var statusCode : String = result.statusCode.toLowerCase();
             var amountStr : String = result.amount.toLowerCase();
             var amount : Number = parseFloat(amountStr);
@@ -123,7 +151,7 @@ package com.funkypanda.aseandcb
             var success : Boolean = result.success;
             if (success)
             {
-                dispatchEvent( new AseanDCBPaySuccessEvent(amount, statusCode, service));
+                dispatchEvent( new AseanDCBPaySuccessEvent(amount, statusCode, service, transactionID));
             }
             else
             {
