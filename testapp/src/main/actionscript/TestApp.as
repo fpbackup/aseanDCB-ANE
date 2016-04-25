@@ -169,6 +169,15 @@ public class TestApp extends Sprite
 
         button = new Button();
         button.addEventListener(Event.TRIGGERED, function (evt : Event) : void {
+            var country : String = aseanDCB.getCountry("HMEINV604178575" , "NIKRCY676604865");
+            log("Country:" + country);
+        });
+        button.label = "getCountry";
+        button.validate();
+        container.addChild(button);
+
+        button = new Button();
+        button.addEventListener(Event.TRIGGERED, function (evt : Event) : void {
             logTF.text = "";
         });
         button.label = "clear log";

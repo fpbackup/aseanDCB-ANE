@@ -92,6 +92,21 @@ public class AseanDCB extends EventDispatcher
     }
 
     /**
+     * SIM based country detection. Returns null if unsupported country, otherwise the country name.
+     */
+    public function getCountry(forestID : String, forestKey : String) : String
+    {
+        if (isAndroid)
+        {
+            return String(_extContext.call("aseanDCBGetCountry", forestID, forestKey));
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    /**
      * Makes a debug payment that always succeeds. The transaction ID is not a real one, just a random string.
      */
     public function payDebugSuccess(successMsg : String, prices : Vector.<String>,

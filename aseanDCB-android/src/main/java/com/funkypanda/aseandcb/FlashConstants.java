@@ -13,5 +13,6 @@ public class FlashConstants {
     final public static String aseanDCBPay = "aseanDCBPay";
     final public static String aseanDCBPayDetect = "aseanDCBPayDetect";
     final public static String aseanDCBAvailable = "aseanDCBAvailable";
+    final public static String aseanDCBGetCountry = "aseanDCBGetCountry";
 
 }
