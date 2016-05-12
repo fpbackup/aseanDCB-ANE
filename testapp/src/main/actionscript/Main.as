@@ -39,7 +39,7 @@ public class Main extends Sprite {
                 {
                     errStr = event.error.toString();
                 }
-                TestApp.log("UNCAUGHT ERROR " + errStr);
+                TestApp.log("UNCAUGHT ERROR " + errId + " " + errStr);
             });
         mouseEnabled = mouseChildren = false;
         loaderInfo.addEventListener(Event.COMPLETE, loaderInfo_completeHandler);
